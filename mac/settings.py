@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     #Apps
     'authentication',
     'Notifications',
+    'Profile',
     'Followers',
     'Timelines',
     'Story',

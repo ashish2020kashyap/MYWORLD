@@ -41,6 +41,7 @@ urlpatterns = [
 
     re_path(r'query/?', include('GraphQl.urls')),
     re_path(r'follow/?', include('Followers.urls')),
+    re_path(r'profile/?', include('Profile.urls')),
     re_path(r'comment/?', include('Comment.urls')),
     re_path(r'like/?', include('Like.urls')),
     re_path(r'video/?', include('Videos.urls')),
