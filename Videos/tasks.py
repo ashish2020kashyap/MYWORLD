@@ -8,12 +8,11 @@ from .serializers import UploadSerializer
 import subprocess
 import requests
 import json
-import sys
-import ffmpeg
 
 
-import ffprobe
-from ffprobe import FFProbe
+
+
+
 
 
 
@@ -39,16 +38,6 @@ def videoupload(user,title,uploaded_file_url):
 
     return None
 
-@shared_task
-def get_video_length(filename):
-
-    output = subprocess.check_output(("ffprobe", "-v", "error", "-show_entries",
-                                      "format=duration", "-of", "default=noprint_wrappers=1:nokey=1", filename)).strip()
-    video_length = int(float(output))
-    print("Video length in seconds: "+str(video_length))
-
-    return video_length
-
 
 
 
@@ -72,10 +61,6 @@ def preprocess(videos_id):
     p = requests.post(url, data={}, headers={'InvocationType': 'Event'})
 
     print(p)
-
-
-
-
 
     return None
 
