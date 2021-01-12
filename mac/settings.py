@@ -178,22 +178,11 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.2/howto/static-files/
-
-
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'ashish160kumar@gmail.com'
-EMAIL_HOST_PASSWORD = 'luciferkashyap@1'
-
-'''
 EMAIL_HOST_USER="cessinideveloper@gmail.com"
 EMAIL_BACKEND = 'django_ses.SESBackend'
 AWS_ACCESS_KEY_ID = 'AKIATCML2ROCI75DOVYP'
 AWS_SECRET_ACCESS_KEY = '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'
-'''
+
 
 
 
