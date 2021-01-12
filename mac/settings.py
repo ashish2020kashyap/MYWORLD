@@ -192,23 +192,65 @@ USE_L10N = True
 
 USE_TZ = True
 
+GRAPHENE = {
+    'SCHEMA': 'GraphQl.schema.schema'
+}
+
+
+
+
+
+
+BROKER_TRANSPORT = 'sqs'
+BROKER_TRANSPORT_OPTIONS = {
+    'region': 'us-east-1',
+}
+BROKER_USER = "AKIAUHZ3VLC5SU7SJTQB"
+BROKER_PASSWORD = "iE6PRYRFytsybjXgDCtgEagjAGCZ4uEEddp0nQKx"
+BROKER_URL = 'https://sqs.us-east-1.amazonaws.com/291646036155/myworldSQS'
+
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Africa/Nairobi'
+
+
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_CACHE_BACKEND = 'django-cache'
+# celery setting.
+#CELERY_CACHE_BACKEND = 'default'
+
+
+
+# django setting.
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'my_cache_table',
+    }
+}
+
+
+
 
 EMAIL_HOST_USER="cessinideveloper@gmail.com"
 EMAIL_BACKEND = 'django_ses.SESBackend'
-AWS_ACCESS_KEY_ID = 'AKIATCML2ROCI75DOVYP'
-AWS_SECRET_ACCESS_KEY = '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'
+AWS_ACCESS_KEY_ID = 'AKIAUHZ3VLC5SU7SJTQB'
+AWS_SECRET_ACCESS_KEY = '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'
 
 
 
-
+AWS_STORAGE_BUCKET_NAME = 'myworld2022'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
 USING_S3 = True
 
+
 if USING_S3:
     # AWS SETTINGS
-    AWS_ACCESS_KEY_ID = 'AKIATKNI4ILQ67KU4562'
-    AWS_SECRET_ACCESS_KEY = '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'
-    AWS_STORAGE_BUCKET_NAME = 'myworld1999'
+    AWS_ACCESS_KEY_ID = 'AKIAUHZ3VLC5SU7SJTQB'
+    AWS_SECRET_ACCESS_KEY = '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'
+    AWS_STORAGE_BUCKET_NAME = 'myworld2022'
     AWS_DEFAULT_ACL = 'public-read'
     AWS_S3_USE_SSL =False
 
@@ -217,6 +259,8 @@ if USING_S3:
     # AWS S3 static settings
     STATIC_FOLDER = 'static'
     STATIC_ROOT = 'media'
+
+
     STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, STATIC_FOLDER)
     STATICFILES_STORAGE = 'mac.default_storages.StaticStorage'
 
@@ -235,5 +279,14 @@ else:
 
 
 
-# ANY EXTRA STATIC FOLDERS THAT DJANGO SHOULD BE AWARE OF
+
+
+STATIC_URL = '/static/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = []
+
+
+STATICFILES_DIRS = []
+
