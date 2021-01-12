@@ -26,7 +26,7 @@ SECRET_KEY = '@6p-h7#oy4unyb4+(@i&3eq(knbkvjkeyv&@*8+a%f45b@mfm1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['198.211.99.20', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['myworld2021.herokuapp.com']
 
 AUTH_USER_MODEL = 'authentication.User'
 # Application definition
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
     'drf_yasg',
+    'storages',
     #Apps
     'authentication',
     'Notifications',
@@ -122,13 +123,27 @@ CORS_ORIGIN_REGEX_WHITELIST = [
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+'''
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'pxetnltn',
+        'USER': 'pxetnltn',
+        'PASSWORD': 'CTEvLqkJKExSXei6TGbLdJf0kTblc1WB',
+        'HOST': 'ziggy.db.elephantsql.com',
+        'PORT': '5432',
+    }
+}
+
+
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
@@ -186,11 +201,39 @@ AWS_SECRET_ACCESS_KEY = 'LprNYxHTzZaaEEZBNmqH7P8YMOy3yZNmc617Pyje'
 
 
 
-STATIC_URL = '/static/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = []
+
+USING_S3 = True
+
+if USING_S3:
+    # AWS SETTINGS
+    AWS_ACCESS_KEY_ID = 'AKIATKNI4ILQ67KU4562'
+    AWS_SECRET_ACCESS_KEY = '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'
+    AWS_STORAGE_BUCKET_NAME = 'myworld1999'
+    AWS_DEFAULT_ACL = 'public-read'
+    AWS_S3_USE_SSL =False
+
+    AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+    # AWS S3 static settings
+    STATIC_FOLDER = 'static'
+    STATIC_ROOT = 'media'
+    STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, STATIC_FOLDER)
+    STATICFILES_STORAGE = 'mac.default_storages.StaticStorage'
+
+    # AWS S3 public media settings
+    MEDIA_FOLDER = 'media'
+    MEDIA_ROOT = 'media/'
+    MEDIA_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, MEDIA_FOLDER)
+    DEFAULT_FILE_STORAGE = 'mac.default_storages.MediaStorage'
+else:
+    # IF WE ARE WORKING LOCALLY WITHOUT AWS
+    STATIC_URL = 'static/'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+    MEDIA_URL = 'media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_URL)
 
 
+
+
+# ANY EXTRA STATIC FOLDERS THAT DJANGO SHOULD BE AWARE OF
 STATICFILES_DIRS = []
