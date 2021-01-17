@@ -2,6 +2,8 @@ from rest_framework import serializers
 from . import google, facebook, twitterhelper
 from .register import register_social_user
 import os
+from django.conf import settings
+
 from rest_framework.exceptions import AuthenticationFailed
 
 
@@ -42,7 +44,7 @@ class GoogleSocialAuthSerializer(serializers.Serializer):
                 'The token is invalid or expired. Please login again.'
             )
 
-        if user_data['aud'] != os.environ.get('GOOGLE_CLIENT_ID'):
+        if user_data['aud'] != settings.GOOGLE_CLIENT_ID:
 
             raise AuthenticationFailed('oops, who are you?')
 

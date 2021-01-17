@@ -1,6 +1,7 @@
 import twitter
 import os
 from rest_framework import serializers
+from django.conf import settings
 
 
 class TwitterAuthTokenVerification:
@@ -17,8 +18,8 @@ class TwitterAuthTokenVerification:
         user profile info
         """
 
-        consumer_api_key = os.environ.get('TWITTER_API_KEY')
-        consumer_api_secret_key = os.environ.get('TWITTER_CONSUMER_SECRET')
+        consumer_api_key = settings.TWITTER_API_KEY
+        consumer_api_secret_key = settings.TWITTER_CONSUMER_SECRET
 
         try:
             api = twitter.Api(

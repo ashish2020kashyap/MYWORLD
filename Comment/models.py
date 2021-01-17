@@ -13,4 +13,4 @@ class Comment(models.Model):
         ordering = ['-timestamp']
 
     def __str__(self):
-        return str(self.id)
+        return str(self.commentvideo.id)

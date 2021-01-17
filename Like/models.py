@@ -5,10 +5,10 @@ from Videos.models import Upload
 
 class Like(models.Model):
     EXPRESSIONS = (
-        ('love', 'love'),
-        ('happy', 'happy'),
-        ('sad', 'sad'),
-        ('angry', 'angry'),
+        ('1', 'love'),
+        ('2', 'happy'),
+        ('3', 'sad'),
+        ('4', 'angry'),
     )
     likeuser = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='likeuser')
     likevideo = models.ForeignKey(Upload, null=True, on_delete=models.SET_NULL, related_name='likevideo')
@@ -17,4 +17,4 @@ class Like(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True,null=True,blank=True)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.likevideo.id)

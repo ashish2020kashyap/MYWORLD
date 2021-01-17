@@ -19,6 +19,13 @@ class ChunkUploadSerializer(serializers.ModelSerializer):
         fields = ['id','video_id','video_length','thumbnail','chunk1','chunk2','chunk3','chunk4']
 
 
+class ChunkFetchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ChunkUpload
+        fields = ['id','video_id','video_length','thumbnail','chunk1','chunk2','chunk3','chunk4','view_count']
+
+
+
 class fetchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Upload

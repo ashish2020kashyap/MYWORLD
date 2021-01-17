@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate
 from authentication.models import User
 import os
 import random
+from django.conf import settings
 from rest_framework.exceptions import AuthenticationFailed
 
 
@@ -24,7 +25,7 @@ def register_social_user(provider, user_id, email, name):
         if provider == filtered_user_by_email[0].auth_provider:
 
             registered_user = authenticate(
-                email=email, password=os.environ.get('SOCIAL_SECRET'))
+                email=email, password=settings.SOCIAL_SECRET)
 
             return {
                 'username': registered_user.username,
@@ -38,14 +39,14 @@ def register_social_user(provider, user_id, email, name):
     else:
         user = {
             'username': generate_username(name), 'email': email,
-            'password': os.environ.get('SOCIAL_SECRET')}
+            'password': settings.SOCIAL_SECRET}
         user = User.objects.create_user(**user)
         user.is_verified = True
         user.auth_provider = provider
         user.save()
 
         new_user = authenticate(
-            email=email, password=os.environ.get('SOCIAL_SECRET'))
+            email=email, password=settings.SOCIAL_SECRET)
         return {
             'email': new_user.email,
             'username': new_user.username,

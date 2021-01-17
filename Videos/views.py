@@ -5,8 +5,9 @@ from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
-from .serializers import UploadSerializer, fetchSerializer,ChunkUploadSerializer
+from .serializers import UploadSerializer, fetchSerializer,ChunkUploadSerializer,ChunkFetchSerializer
 from .models import *
+from rest_framework import routers, serializers, viewsets
 from .tasks import sleepy, videoupload,preprocess
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
@@ -146,6 +147,30 @@ class chunkfetching(APIView):
         video_1 = ChunkUpload.objects.all()
         serializer = ChunkUploadSerializer(video_1, many=True)
         return Response(serializer.data)
+
+
+
+class SplitVideo(viewsets.ModelViewSet):
+    serializer_class = ChunkFetchSerializer
+    queryset=ChunkUpload.objects.order_by('view_count')
+
+    def retrieve(self, request,pk, *args, **kwargs):
+        print(pk)
+        obj = self.get_object()
+        obj.view_count = obj.view_count + 1
+        obj.save(update_fields=("view_count", ))
+        return super().retrieve(request, *args, **kwargs)
+
+    def list(self, request,pk, *args, **kwargs):
+        print(pk)
+        # You could also increment the view count if people see the `Notice` in a listing.
+        queryset = self.filter_queryset(self.get_queryset())
+        for obj in queryset:
+            obj.view_count = obj.view_count + 1
+            obj.save(update_fields=("view_count", ))
+        return super().list(request, *args, **kwargs)
+
+
 
 
 class endpoint(APIView):

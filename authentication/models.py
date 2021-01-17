@@ -1,6 +1,10 @@
 from django.db import models
 
 # Create your models here.
+import os, random, string
+from slugify import slugify
+import django.contrib.auth.hashers as hashers
+
 from django.contrib.auth.models import (
     AbstractBaseUser, BaseUserManager, PermissionsMixin)
 
@@ -77,6 +81,7 @@ def random_name():
     name = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(32)])
     return name
 
+
 class Profile(models.Model):
     user = models.OneToOneField(User, to_field='id', on_delete=models.CASCADE,null = True)
     gender = models.CharField(max_length=2, choices=
@@ -86,10 +91,14 @@ class Profile(models.Model):
         ),null = True)
     slug = models.SlugField(unique=True, max_length=50, null=True)
     birth_date = models.DateField(null=True, blank=True)
-    is_celeb = models.BooleanField(null=True)
-    is_premium = models.BooleanField(null=True)
-    verification_id = models.FileField(null=True)
-    profile_picture = models.FileField(upload_to='profile_picture/'+random_name(),null = True)
+    profile_picture = models.ImageField(default='default.jpg', upload_to='profile_picture/'+random_name(),null = True)
 
     def __str__(self):
-        return self.user.email
+        return self.slug
+
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        hapazat = self.user.username
+        slug = slugify(hapazat)
+        if self.slug != slug:
+            self.slug = slug
+        return super(Profile, self).save()

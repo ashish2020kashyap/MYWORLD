@@ -13,5 +13,5 @@ from authentication.models import Profile
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ['id','user', 'gender', 'slug','birth_date','is_celeb','is_premium','verification_id','profile_picture']
+        fields = ['id', 'user', 'gender', 'birth_date', 'profile_picture']
 

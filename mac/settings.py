@@ -26,7 +26,7 @@ SECRET_KEY = '@6p-h7#oy4unyb4+(@i&3eq(knbkvjkeyv&@*8+a%f45b@mfm1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['myworld2021.herokuapp.com']
+ALLOWED_HOSTS = ['myworld2021.herokuapp.com','localhost','127.0.0.1']
 
 AUTH_USER_MODEL = 'authentication.User'
 # Application definition
@@ -123,7 +123,7 @@ CORS_ORIGIN_REGEX_WHITELIST = [
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-'''
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -142,7 +142,7 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
+'''
 
 
 REST_FRAMEWORK = {
@@ -191,6 +191,24 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+
+SOCIAL_SECRET="Myworld@123"
+
+TWITTER_API_KEY=""
+TWITTER_CONSUMER_SECRET=""
+GOOGLE_CLIENT_ID="161131323133-ds94m6msg0tbplsthaks8ag3el2r562a.apps.googleusercontent.com"
+GOOGLE_CLIENT_SECRET="UhY1ycNqT2_mv8Z2ktbYXyc7"
+
+
+
+
+
+
+
+
+
+
 
 GRAPHENE = {
     'SCHEMA': 'GraphQl.schema.schema'
@@ -243,7 +261,7 @@ AWS_SECRET_ACCESS_KEY = 'iE6PRYRFytsybjXgDCtgEagjAGCZ4uEEddp0nQKx'
 AWS_STORAGE_BUCKET_NAME = 'myworld2022'
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
-USING_S3 = True
+USING_S3 = False
 
 
 if USING_S3:
