@@ -3,11 +3,16 @@ from .views import *
 from Followers import views
 
 urlpatterns = [
-    re_path(r'followers/<int:pk>/?', follow.as_view()),
+    re_path(r'followers/(?P<pk>\d+)/?', follow.as_view()),
     re_path(r'allfollowers/?', all_follow.as_view()),
-    re_path(r'followrud/<int:pk>/?', followrud.as_view()),
-    re_path(r'followings/<int:pk>/?', following.as_view()),
+    re_path(r'followrud/(?P<pk>\d+)/?', followrud.as_view()),
     re_path(r'allfollowing/?', all_following.as_view()),
-    re_path(r'followingrud/<int:pk>/?', followingrud.as_view()),
+    re_path(r'followingrud/(?P<pk>\d+)/?', followingrud.as_view()),
+
+
+    re_path(r'postfollow/(?P<pk>\d+)/?', followpost.as_view()),
+    re_path(r'fetchfollow/(?P<pk>\d+)/?', following.as_view()),
+    re_path(r'countfollow/(?P<pk>\d+)/?', countfollow.as_view()),
+
 
 ]

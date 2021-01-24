@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from .serializers import FollowerSerializer,FollowingSerializer
 from .models import *
 from django.http import HttpResponse
+from django.http import Http404
 
 
 class all_follow(APIView):
@@ -70,17 +71,6 @@ class follow(APIView):
         return Response(serializer.data)
 
 
-class following(APIView):
-
-    def get(self, request,pk):
-        following_1 = Following.objects.all()
-        following_2= following_1.filter(myfollowing=pk)
-        following_3 = following_1.filter(myfollowing=pk).count()
-        print(following_3)
-        serializer = FollowingSerializer(following_2, many=True)
-        return Response(serializer.data)
-
-
 
 class all_following(APIView):
     def get(self, request):
@@ -112,13 +102,6 @@ class followingrud(APIView):
         serializer = FollowingSerializer(pro)
         return Response(serializer.data)
 
-    def put(self, request, pk, format=None):
-        single_following = self.get_object(pk)
-        serializer = FollowingSerializer(single_following, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
@@ -127,5 +110,38 @@ class followingrud(APIView):
         single_following_delete.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
+
+class followpost(APIView):
+    def post(self, request,pk):
+        serializer = FollowerSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+
+class following(APIView):
+
+    def get(self, request,pk):
+        follow_1 = Follower.objects.all()
+        follow_2= follow_1.filter(myfollow=pk)
+        follow_3 = follow_1.filter(myfollow=pk).count()
+        print(follow_3)
+        serializer = FollowerSerializer(follow_2, many=True)
+        return Response(serializer.data)
+
+
+
+class countfollow(APIView):
+
+    def get(self, request,pk):
+        follow_1 = Follower.objects.all()
+        follow_2= follow_1.filter(myfollow=pk).count()
+        res={'totalfollowers':follow_2}
+        return Response(res)
 
 

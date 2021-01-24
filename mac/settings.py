@@ -12,19 +12,15 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 import datetime
+from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '@6p-h7#oy4unyb4+(@i&3eq(knbkvjkeyv&@*8+a%f45b@mfm1'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = ['myworld2021.herokuapp.com','localhost','127.0.0.1']
 
@@ -61,6 +57,9 @@ INSTALLED_APPS = [
     'RecommendationEngine',
     'Discovery',
     ##
+
+    'django_celery_beat',
+    'django_celery_results',
 
 
 
@@ -193,12 +192,13 @@ USE_L10N = True
 USE_TZ = True
 
 
-SOCIAL_SECRET="Myworld@123"
 
-TWITTER_API_KEY=""
-TWITTER_CONSUMER_SECRET=""
-GOOGLE_CLIENT_ID="161131323133-ds94m6msg0tbplsthaks8ag3el2r562a.apps.googleusercontent.com"
-GOOGLE_CLIENT_SECRET="UhY1ycNqT2_mv8Z2ktbYXyc7"
+SOCIAL_SECRET= config('SOCIAL_SECRET')
+
+TWITTER_API_KEY= config('TWITTER_API_KEY')
+TWITTER_CONSUMER_SECRET= config('TWITTER_CONSUMER_SECRET')
+GOOGLE_CLIENT_ID= config('GOOGLE_CLIENT_ID')
+GOOGLE_CLIENT_SECRET= config('GOOGLE_CLIENT_SECRET')
 
 
 
@@ -223,9 +223,10 @@ BROKER_TRANSPORT = 'sqs'
 BROKER_TRANSPORT_OPTIONS = {
     'region': 'us-east-1',
 }
-BROKER_USER = "AKIAUHZ3VLC5SU7SJTQB"
-BROKER_PASSWORD = "iE6PRYRFytsybjXgDCtgEagjAGCZ4uEEddp0nQKx"
-BROKER_URL = 'https://sqs.us-east-1.amazonaws.com/291646036155/myworldSQS'
+BROKER_USER = config('BROKER_USER')
+BROKER_PASSWORD = config('BROKER_PASSWORD')
+BROKER_URL = config('BROKER_URL')
+
 
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
@@ -251,14 +252,14 @@ CACHES = {
 
 
 
-EMAIL_HOST_USER="cessinideveloper@gmail.com"
-EMAIL_BACKEND = 'django_ses.SESBackend'
-AWS_ACCESS_KEY_ID = 'AKIAUHZ3VLC5SU7SJTQB'
-AWS_SECRET_ACCESS_KEY = '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'
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_BACKEND = config('EMAIL_BACKEND')
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
 
 
 
-AWS_STORAGE_BUCKET_NAME = 'myworld2022'
+AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
 USING_S3 = False
@@ -266,9 +267,9 @@ USING_S3 = False
 
 if USING_S3:
     # AWS SETTINGS
-    AWS_ACCESS_KEY_ID = 'AKIAUHZ3VLC5SU7SJTQB'
-    AWS_SECRET_ACCESS_KEY = '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'
-    AWS_STORAGE_BUCKET_NAME = 'myworld2022'
+    AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
     AWS_DEFAULT_ACL = 'public-read'
     AWS_S3_USE_SSL =False
 
