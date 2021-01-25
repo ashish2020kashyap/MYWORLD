@@ -122,7 +122,7 @@ CORS_ORIGIN_REGEX_WHITELIST = [
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -134,15 +134,15 @@ DATABASES = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'pxetnltn',
-        'USER': 'pxetnltn',
-        'PASSWORD': 'CTEvLqkJKExSXei6TGbLdJf0kTblc1WB',
+        'NAME': 'vydgtheh',
+        'USER': 'vydgtheh',
+        'PASSWORD': 'q5FdOF-ftVAk3C2xbbqOFaO9W9QFiKnu',
         'HOST': 'ziggy.db.elephantsql.com',
         'PORT': '5432',
     }
 }
 
-'''
+
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
