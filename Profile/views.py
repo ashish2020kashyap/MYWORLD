@@ -14,9 +14,13 @@ from asgiref.sync import sync_to_async
 import time, asyncio
 from authentication.models import Profile
 
+from rest_framework.permissions import IsAuthenticated
+
 
 
 class profile(APIView):
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
         print(request.data)
         all_profile = Profile.objects.all()
@@ -26,6 +30,7 @@ class profile(APIView):
 
 
 class profilerud(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get_object(self, pk):
         try:

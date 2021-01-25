@@ -9,9 +9,11 @@ from .serializers import FollowerSerializer,FollowingSerializer
 from .models import *
 from django.http import HttpResponse
 from django.http import Http404
+from rest_framework.permissions import IsAuthenticated
 
 
 class all_follow(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self, request):
         print(request.data)
         all_follow = Follower.objects.all()
@@ -29,6 +31,7 @@ class all_follow(APIView):
 
 
 class followrud(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get_object(self, pk):
         try:
@@ -61,6 +64,7 @@ class followrud(APIView):
 
 
 class follow(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request,pk):
         follow_1 = Follower.objects.all()
@@ -73,6 +77,7 @@ class follow(APIView):
 
 
 class all_following(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self, request):
         print(request.data)
         all_following = Following.objects.all()
@@ -90,6 +95,7 @@ class all_following(APIView):
 
 
 class followingrud(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get_object(self, pk):
         try:
@@ -113,6 +119,7 @@ class followingrud(APIView):
 
 
 class followpost(APIView):
+    permission_classes = [IsAuthenticated]
     def post(self, request,pk):
         serializer = FollowerSerializer(data=request.data)
         if serializer.is_valid():
@@ -125,6 +132,7 @@ class followpost(APIView):
 
 
 class following(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request,pk):
         follow_1 = Follower.objects.all()
@@ -137,6 +145,7 @@ class following(APIView):
 
 
 class countfollow(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request,pk):
         follow_1 = Follower.objects.all()

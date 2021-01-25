@@ -15,13 +15,14 @@ import json
 from django.http import HttpResponse
 # import serializer from rest_framework
 from rest_framework import serializers
-
+from rest_framework.permissions import IsAuthenticated
 import os
 import os.path
 import subprocess
 
 
 class uploading(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, pk):
         video_1 = Upload.objects.all()
@@ -38,6 +39,7 @@ class uploading(APIView):
 
 
 class upload(APIView):
+    permission_classes = [IsAuthenticated]
     def post(self, request):
         serializer = UploadSerializer(data=request.data)
         if serializer.is_valid():
@@ -47,6 +49,7 @@ class upload(APIView):
 
 
 class fetching(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         video_1 = Upload.objects.all()
@@ -55,6 +58,7 @@ class fetching(APIView):
 
 
 class singlefetching(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, pk):
         video_1 = Upload.objects.all()
@@ -64,6 +68,7 @@ class singlefetching(APIView):
 
 
 class videolinks(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, pk):
         video_1 = Upload.objects.all().filter(user=pk)
@@ -72,6 +77,7 @@ class videolinks(APIView):
 
 
 class allvideolinks(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         video_1 = Upload.objects.all()
@@ -100,6 +106,7 @@ class distributedupload(APIView):
 '''
 
 class distributedupload(APIView):
+    permission_classes = [IsAuthenticated]
     def post(self, request):
         user = request.data.get('user')
         title = request.data.get('title')
@@ -126,6 +133,7 @@ class distributedupload(APIView):
 
 
 class something(APIView):
+    permission_classes = [IsAuthenticated]
     def post(self, request):
         serializer = UploadSerializer(data=request.data)
         if serializer.is_valid():
@@ -142,6 +150,7 @@ class something(APIView):
 
 
 class chunkfetching(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         video_1 = ChunkUpload.objects.all()

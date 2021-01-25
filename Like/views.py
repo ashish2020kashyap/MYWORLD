@@ -8,9 +8,11 @@ from rest_framework.response import Response
 from .serializers import LikeSerializer
 from .models import *
 from django.http import HttpResponse
+from rest_framework.permissions import IsAuthenticated
 
 
 class all_like(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self, request):
         all_like = Like.objects.all()
         serializer = LikeSerializer(all_like, many=True)
