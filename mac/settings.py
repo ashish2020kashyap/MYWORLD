@@ -22,7 +22,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = ['myworld2021.herokuapp.com','localhost','127.0.0.1']
+ALLOWED_HOSTS = ['myworld2021.herokuapp.com','localhost','127.0.0.1','myworld.studio']
 
 AUTH_USER_MODEL = 'authentication.User'
 # Application definition

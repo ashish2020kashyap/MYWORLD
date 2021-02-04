@@ -45,6 +45,7 @@ urlpatterns = [
     re_path(r'comment/?', include('Comment.urls')),
     re_path(r'like/?', include('Like.urls')),
     re_path(r'video/?', include('Videos.urls')),
+    re_path(r'searchengine/?', include('SearchEngine.urls')),
     url(r'^image/', include('Discovery.urls')),
 
 
