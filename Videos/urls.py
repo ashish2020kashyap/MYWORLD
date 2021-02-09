@@ -21,5 +21,7 @@ urlpatterns = [
     re_path(r'distributed/?', distributedupload.as_view()),
     re_path(r'^allvideolinks/?', allvideolinks.as_view()),
     re_path(r'somethingnew/?', something.as_view()),
+    re_path(r'counting/(?P<pk>\d+)/?', countvideo.as_view()),
+    re_path(r'viewscount/(?P<pk>\d+)/?', viewscount.as_view()),
 ]
 

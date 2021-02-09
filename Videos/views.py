@@ -5,7 +5,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
-from .serializers import UploadSerializer, fetchSerializer,ChunkUploadSerializer,ChunkFetchSerializer
+from .serializers import UploadSerializer, fetchSerializer,ChunkUploadSerializer,ChunkFetchSerializer,IpsSerializer
 from .models import *
 from rest_framework import routers, serializers, viewsets
 from .tasks import sleepy, videoupload,preprocess
@@ -19,6 +19,8 @@ from rest_framework.permissions import IsAuthenticated
 import os
 import os.path
 import subprocess
+from authentication.models import User
+from django.db.models import Q
 
 
 class uploading(APIView):
@@ -182,6 +184,60 @@ class SplitVideo(viewsets.ModelViewSet):
 
 
 
+
+class countvideo(APIView):
+
+
+
+    def get(self, request, pk):
+        def get_ip(request):
+            adress = request.META.get('HTTP_X_FORWARDED_FOR')
+            if adress:
+                ip = adress.split(',')[-1].strip()
+            else:
+                ip = request.META.get('REMOTE_ADDR')
+
+            return ip
+
+        video_1 = ChunkUpload.objects.all()
+        video_2 = video_1.filter(video_id=pk)
+        serializer = ChunkFetchSerializer(video_2, many=True)
+        singlevideo = ChunkUpload.objects.get(id=pk)
+
+        ip = get_ip(request)
+        u = IPS(video=singlevideo,user=ip)
+        print(ip)
+        #result = IPS.objects.filter(Q(user_icontains=ip))
+        result = IPS.objects.filter(user=ip)
+        idfinding= IPS.objects.filter(video=pk)
+        print(idfinding)
+
+        if len(result) == 1 and len(idfinding)==1:
+            print("user exist")
+
+        elif len(result) > 1 and len(idfinding)>1:
+            print("user exist more")
+
+        else:
+            u.save()
+            print("user is unique")
+        counting = IPS.objects.all().count()
+        print(counting)
+
+
+        return Response(serializer.data)
+
+
+
+
+
+
+
+
+
+
+
+
 class endpoint(APIView):
     def post(self, request):
         serializer = ChunkUploadSerializer(data=request.data)
@@ -189,3 +245,11 @@ class endpoint(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class viewscount(APIView):
+
+    def get(self, request,pk):
+        video_1 = IPS.objects.all()
+        serializer = IpsSerializer(video_1, many=True)
+        return Response(serializer.data)

@@ -47,3 +47,10 @@ class ChunkUpload(models.Model):
         return str(self.video_id.id)
 
 
+
+class IPS(models.Model):
+    video = models.ForeignKey(ChunkUpload, null=True, on_delete=models.SET_NULL, related_name='chunkvideo')
+    user = models.TextField(default=None)
+
+    def __str__(self):
+        return self.user

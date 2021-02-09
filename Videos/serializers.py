@@ -5,6 +5,7 @@ from .models import *
 
 from rest_framework import status
 from rest_framework.response import Response
+from authentication.models import User
 
 
 class UploadSerializer(serializers.ModelSerializer):
@@ -31,3 +32,8 @@ class fetchSerializer(serializers.ModelSerializer):
         model = Upload
         fields = ['upload_file']
 
+
+class IpsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = IPS
+        fields = ['video','user']
