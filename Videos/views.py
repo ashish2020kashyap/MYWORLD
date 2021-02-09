@@ -249,7 +249,13 @@ class endpoint(APIView):
 
 class viewscount(APIView):
 
-    def get(self, request,pk):
+    def get(self, request, pk):
         video_1 = IPS.objects.all()
-        serializer = IpsSerializer(video_1, many=True)
-        return Response(serializer.data)
+        count = video_1.filter(video=pk).count()
+        return Response(
+            {
+                'video_id': pk,
+                'views': count
+            }
+
+        )
